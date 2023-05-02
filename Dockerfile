@@ -2,7 +2,7 @@ FROM openjdk:17-jdk-alpine
 
 WORKDIR /app
 
-ENV DATASOURCE_URL=jdbc:mysql://localhost/vollmed_api
+ENV DATASOURCE_URL=jdbc:mysql://172.31.31.6:3306/vollmed_api
 ENV DATASOURCE_USERNAME=root
 ENV DATASOURCE_PASSWORD=Root@123
 
