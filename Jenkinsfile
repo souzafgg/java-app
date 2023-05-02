@@ -54,5 +54,15 @@ pipeline {
         }
       }
     }
+
+    stage('Quality Gate') {
+      when { expression { params.action == 'create' }}
+      steps {
+        script {
+          def sonar = 'sonar'
+          QualityGate(sonar)
+        }
+      }
+    }
   }
 }
