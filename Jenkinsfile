@@ -115,17 +115,16 @@ pipeline {
       when {
         beforeInput true
         expression {
-          env.BRANCH_NAME =! 'main'
+          env.BRANCH_NAME == 'main'
         }
       }
         input {
           message 'Do you want to stop the app container?'
           ok 'ok'
         }
-        steps {
-          script {
-            stopDockerContainer("${params.AppName}")
-          }
+
+        script {
+          stopDockerContainer("${params.AppName}")
         }
     }
   }
