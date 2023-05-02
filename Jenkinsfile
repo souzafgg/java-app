@@ -115,7 +115,7 @@ pipeline {
       when {
         beforeInput true
         expression {
-          env.BRANCH_NAME == 'main'
+          env.BRANCH_NAME =! 'main'
         }
       }
         input {
