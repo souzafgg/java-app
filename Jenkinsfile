@@ -5,7 +5,6 @@ pipeline {
   agent any
 
   parameters{
-    // choice(name: 'action', choices: 'create\ndelete', description: 'Choose create/destroy')
     string(name: 'DockerUser', description: "name of the dockerhub user", defaultValue: 'szadhub' )
     string(name: 'ImageTag', description: "tag of the docker build", defaultValue: env.BUILD_ID )
     string(name: 'AppName', description: "name of the app", defaultValue: 'java-app' )
@@ -17,7 +16,7 @@ pipeline {
 
     stage('Git Checkout') {
 
-          // when { expression { params.action == 'create' }}
+  
           steps{
           gitCheckout(
             branch: "main",
@@ -28,7 +27,6 @@ pipeline {
 
     stage('Unit Test Maven') {
 
-      // when { expression { params.action == 'create' }}
       steps{
         script {
           mvnTest()
@@ -39,7 +37,6 @@ pipeline {
 
     stage('Integration Test Maven') {
 
-      // when { expression { params.action == 'create' }}
       steps{
         script{
           mvnIntegrationTest()
@@ -49,7 +46,6 @@ pipeline {
     }
 
     stage('Static code analysis with Sonarqube') {
-      // when { expression { params.action == 'create' }}
       steps {
         script {
           def sonar = 'sonar'
@@ -59,7 +55,6 @@ pipeline {
     }
 
     stage('Quality Gate') {
-      // when { expression { params.action == 'create' }}
       steps {
         script {
           def sonar = 'sonar'
@@ -69,7 +64,6 @@ pipeline {
     }
 
     stage('Maven Build') {
-      // when { expression { params.action == 'create' }}
       steps {
         script {
           mvnBuild()
@@ -78,7 +72,6 @@ pipeline {
     }
 
     stage('Docker Build') {
-      // when { expression { params.action == 'create' }}
       steps {
         script {
           dockerBuild("${params.DockerUser}", "${params.AppName}", "${params.ImageTag}")
@@ -87,7 +80,6 @@ pipeline {
     }
 
     stage('Push to Docker Hub') {
-      // when { expression { params.action == 'create' }}
       steps {
         script {
           buildToDockerHub("${params.DockerUser}", "${params.AppName}", "${params.ImageTag}")
@@ -107,7 +99,6 @@ pipeline {
     
 
     stage('Trivy Image Scan') {
-      // when { expression { params.action == 'create' }}
       steps {
         script {
           trivyScan("${params.DockerUser}", "${params.AppName}", "${params.ImageTag}")
