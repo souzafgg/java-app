@@ -110,6 +110,14 @@ pipeline {
         }
       }
     }
+
+    stage('Checking if theres older previous build container running') {
+      steps {
+        script {
+          stopDockerContainer("${params.AppName}")
+        }
+      }
+    }
     
     stage('Validate the docker stop container') {
       when {
