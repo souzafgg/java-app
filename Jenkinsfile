@@ -49,7 +49,8 @@ pipeline {
       when { expression { params.action = 'create' }}
       steps {
         script {
-          codeAnalyses()
+          def sonar = 'sonar'
+          codeAnalyses(sonar)
         }
       }
     }
