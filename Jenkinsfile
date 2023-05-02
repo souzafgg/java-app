@@ -86,15 +86,6 @@ pipeline {
       }
     }
 
-    stage('Trivy Scan') {
-      when { expression { params.action == 'create' }}
-      steps {
-        script {
-          trivyScan("${params.DockerUser}", "${params.AppName}", "${params.ImageTag}")
-        }
-      }
-    }
-
     stage('Push to Docker Hub') {
       when { expression { params.action == 'create' }}
       steps {
