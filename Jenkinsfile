@@ -90,7 +90,7 @@ pipeline {
       when { expression { params.action == 'create' }}
       steps {
         script {
-          buildToDockerHub()
+          buildToDockerHub("${params.DockerUser}", "${params.AppName}", "${params.ImageTag}")
         }
       }
     }
