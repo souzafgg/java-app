@@ -102,19 +102,18 @@ pipeline {
         }
       }
     }
+    stage('Checking if theres older previous build container running') {
+      steps {
+        script {
+        containerCheck("${params.AppName}")
+        }
+      }
+    }
 
     stage('Running the Application in container') {
       steps {
         script {
           runAppDocker("${params.AppName}", "${params.DockerUser}", "${params.ImageTag}")
-        }
-      }
-    }
-
-    stage('Checking if theres older previous build container running') {
-      steps {
-        script {
-          containerCheck("${params.AppName}")
         }
       }
     }
