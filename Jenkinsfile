@@ -96,7 +96,10 @@ pipeline {
         message 'Do you want to apply the image Trivy Scan?'
         ok 'ok'
       }
-    
+      steps {
+        echo 'Apply accepted'
+      }
+    }
 
     stage('Trivy Image Scan') {
       steps {
@@ -104,7 +107,6 @@ pipeline {
           trivyScan("${params.DockerUser}", "${params.AppName}", "${params.ImageTag}")
         }
       }
-    }
     }
   }
 }
