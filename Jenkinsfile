@@ -98,13 +98,13 @@ pipeline {
     stage('Validate Trivy Image Scan') {
       when {
         beforeInput true
-        expression { env.BRANCH.NAME == main }
+        expression { env.BRANCH.NAME == 'main' }
       }
       input {
         message 'Do you want to apply the image Trivy Scan?'
         ok 'ok'
       }
-    }
+    
 
     stage('Trivy Image Scan') {
       when { expression { params.action == 'create' }}
@@ -113,6 +113,7 @@ pipeline {
           trivyScan("${params.DockerUser}", "${params.AppName}", "${params.ImageTag}")
         }
       }
+    }
     }
   }
 }
