@@ -94,5 +94,14 @@ pipeline {
         }
       }
     }
+
+    stage('Trivy Image Scan') {
+      when { expression { params.action == 'create' }}
+      steps {
+        script {
+          trivyScan("${params.DockerUser}", "${params.AppName}", "${params.ImageTag}")
+        }
+      }
+    }
   }
 }
