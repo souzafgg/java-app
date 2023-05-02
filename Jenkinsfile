@@ -90,7 +90,7 @@ pipeline {
     stage('Validate Trivy Image Scan') {
       when {
         beforeInput true
-        expression { env.BRANCH.NAME == 'main' }
+        expression { env.BRANCH_NAME == 'main' }
       }
       input {
         message 'Do you want to apply the image Trivy Scan?'
