@@ -8,6 +8,7 @@ pipeline {
     string(name: 'DockerUser', description: "name of the dockerhub user", defaultValue: 'szadhub' )
     string(name: 'ImageTag', description: "tag of the docker build", defaultValue: env.BUILD_ID )
     string(name: 'AppName', description: "name of the app", defaultValue: 'java-app' )
+    booleanParam(name: 'EnableTrivyScan', defaultValue: true, description: 'Enable Trivy Image Scan')
   }
 
   stages {
@@ -87,21 +88,12 @@ pipeline {
       }
     }
 
-    stage('Validate Trivy Image Scan') {
-      when {
-        beforeInput true
-        expression { env.BRANCH_NAME == 'main' }
-      }
-      input {
-        message 'Do you want to apply the image Trivy Scan?'
-        ok 'ok'
-      }
-      steps {
-        echo 'Apply accepted'
-      }
-    }
-
     stage('Trivy Image Scan') {
+      when {
+        expression {
+          params.EnableTrivyScan == true
+        }
+      }
       steps {
         script {
           trivyScan("${params.DockerUser}", "${params.AppName}", "${params.ImageTag}")
