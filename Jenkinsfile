@@ -114,7 +114,7 @@ pipeline {
     stage('Checking if theres older previous build container running') {
       steps {
         script {
-          stopDockerContainer("${params.AppName}")
+          containerCheck("${params.AppName}")
         }
       }
     }
