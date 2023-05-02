@@ -117,6 +117,7 @@ pipeline {
         expression {
           env.BRANCH_NAME == 'main'
         }
+      }
         input {
           message 'Do you want to stop the app container?'
           ok 'ok'
@@ -126,7 +127,6 @@ pipeline {
             stopDockerContainer("${params.AppName}")
           }
         }
-      }
     }
   }
 }
