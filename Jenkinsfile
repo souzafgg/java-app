@@ -88,6 +88,8 @@ pipeline {
       }
     }
 
+
+
     stage('Trivy Image Scan') {
       when {
         expression {
@@ -97,6 +99,32 @@ pipeline {
       steps {
         script {
           trivyScan("${params.DockerUser}", "${params.AppName}", "${params.ImageTag}")
+        }
+      }
+    }
+
+    stage('Running the Application in container') {
+      steps {
+        script {
+          runAppDocker("${params.AppName}", "${params.DockerUser}", "${params.ImageTag}")
+        }
+      }
+    }
+    
+    stage('Validate the docker stop container') {
+      when {
+        beforeInput true
+        expression {
+          env.BRANCH_NAME == 'main'
+        }
+        input {
+          message 'Do you want to stop the app container?'
+          ok 'ok'
+        }
+        steps {
+          script {
+            stopDockerContainer("${params.AppName}")
+          }
         }
       }
     }
