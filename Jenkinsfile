@@ -5,11 +5,18 @@ pipeline {
   stages {
 
     stage('Git Checkout') {
-      steps{
-        script{
-          git branch: 'main', url: 'https://github.com/souzafgg/java-app.git'
-        }
+
+      steps {
+
+        script {
+
+          gitCheckout(
+            branch: "main"
+            url: "https://github.com/souzafgg/java-app.git"
+          )
+
         }
       }
+    }
   }
 }
