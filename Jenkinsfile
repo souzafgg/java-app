@@ -10,12 +10,12 @@ pipeline {
       steps {
 
         script {
-
+          steps{
           gitCheckout(
             branch: "main",
             url: "https://github.com/souzafgg/java-app.git"
           )
-
+          }
         }
       }
     }
