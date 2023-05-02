@@ -118,14 +118,15 @@ pipeline {
           env.BRANCH_NAME == 'main'
         }
       }
+      steps {
         input {
           message 'Do you want to stop the app container?'
           ok 'ok'
         }
-
         script {
           stopDockerContainer("${params.AppName}")
         }
-    }
+      }  
+    } 
   }
 }
