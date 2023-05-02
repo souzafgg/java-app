@@ -1,4 +1,5 @@
 @Library('my-shared-library') _
+
 pipeline {
   
   agent any
@@ -13,6 +14,17 @@ pipeline {
             url: "https://github.com/souzafgg/java-app.git"
           )
           }
+    }
+
+    stage('Unit Test Maven') {
+
+      steps{
+        script {
+
+          mvnTest()
+          
+        }
+      }
     }
   }
 }
